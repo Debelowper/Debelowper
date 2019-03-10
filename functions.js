@@ -19,6 +19,7 @@ function addItem (myObj, target, index){
   var pathRec = myObj.data.recommendation[index];
   var path = null;
 
+//define se está trabalhando com a referência ou com as recomendações e cria o wrapper do item
   if(target == "reference"){
      var id="reference";
      path = pathRef;
@@ -34,10 +35,10 @@ function addItem (myObj, target, index){
      container.className = "item";
      document.getElementById("recom").appendChild(container);
   };
-
-  var link = document.createElement("a");
-  link.href = "http:"+ path.detailUrl;
-  document.getElementById(id).appendChild(link);
+//
+  document.getElementById(id).onclick = function(){
+    window.location.href = "http:"+path.detailUrl;
+  }
 
   var img = document.createElement("img");
   img.src = "http:" + path.imageName;
@@ -45,6 +46,7 @@ function addItem (myObj, target, index){
 
   var name = document.createElement("p");
   name.innerHTML = path.name;
+  name.className = "name"
   document.getElementById(id).appendChild(name);
 
   var oldPrice = document.createElement("p");
@@ -55,26 +57,54 @@ function addItem (myObj, target, index){
   oldPrice.className = "oldPrice";
   document.getElementById(id).appendChild(oldPrice);
 
+  var por = document.createElement("p");
+  por.innerHTML = "Por:"
+  por.style.display ="inline-block";
+  por.style.color = "rgb(204,0,0)";
+  document.getElementById(id).appendChild(por);
+
   var price = document.createElement("strong");
   price.innerHTML = path.price;
   price.className = "price";
-  price.innerHTML= "Por: " + price.innerHTML;
   document.getElementById(id).appendChild(price);
 
-  var paymentConditions = document.createElement("p");
+  var paymentConditions = document.createElement("strong");
+  paymentConditions.className = "paymentConditions";
   paymentConditions.innerHTML = path.productInfo.paymentConditions;
-  paymentConditions.style.color = "red";
+  paymentConditions.innerHTML = paymentConditions.innerHTML.replace("de ", "de R$");
   document.getElementById(id).appendChild(paymentConditions);
 
   var semJuros = document.createElement("p");
   semJuros.innerHTML = "Sem Juros";
-  semJuros.style.color = "red";
+  semJuros.style.color = "rgb(204,0,0)";
   document.getElementById(id).appendChild(semJuros);
 }
-//funções para scroll da paginação
+//funções para scroll da paginação -- por alguma razão não funciona no atom, só no browser
 function goLeft(){
   document.getElementById("recom").scrollBy({top: 0,left: -340, behavior:"smooth"});
 }
 function goRight(){
   document.getElementById("recom").scrollBy({top: 0,left: 340, behavior:"smooth"});
+}
+//troca a cor das setas quando o scroll chega ao fim
+function scrollFunc(){
+  var x = document.getElementById("recom").scrollLeft;
+  if(x==0){
+    document.getElementById("goLeft").src="setaEsquerdaA.png"
+  }else if(x!=0){
+    document.getElementById("goLeft").src="setaEsquerdaB.png";
+  }
+  x = scrolledToBottom(document.getElementById("recom"))
+  if(x== 1){
+    document.getElementById("goRight").src="setaDireitaA.png"
+  }else if(x!=1){
+    document.getElementById("goRight").src="setaDireitaB.png";
+  }
+}
+
+//função para descobrir se o elemento deu scroll até o fim
+function scrolledToBottom(div){
+  if(div.offsetWidth + div.scrollLeft >= div.scrollWidth){
+    return 1;
+  }
 }

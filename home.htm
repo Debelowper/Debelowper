@@ -12,19 +12,22 @@
 <body onload="loadVitrine()">
 
 <div class="vitrine">
+  <div id="overlay">
+    <img src="setaDireitaB.png" id="goRight" onclick="goRight()">
+  </div>
   <div class="header">
-    <span class="a">Você visitou:</span><span class="a">e talvez se interesse por:</span>
+    <span class="headText">Você visitou:</span><span class="headText">e talvez se interesse por:</span>
   </div>
   <div  id="content">
     <div id="ref">
     </div>
-    <img src="setaEsquerdaA.png" id="goLeft" class="scrollBtn" onclick="goLeft()">
-    <div id="recom">
+    <img src="setaEsquerdaA.png" id="goLeft" onclick="goLeft()">
+    <div id="recom" onscroll="scrollFunc()">
     </div>
-    <img src="setaDireitaB.png" id="goRight" class="scrollBtn" onclick="goRight()">
   </div>
   <div id="footer">
   </div>
 </div>
+
 </body>
 </html>
