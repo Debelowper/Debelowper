@@ -35,11 +35,12 @@ function addItem (myObj, target, index){
      container.className = "item";
      document.getElementById("recom").appendChild(container);
   };
-//
+//transforma os itens em links -- melhor assim do que com <a>, pois positionÇ absolute daria problema na paginação
   document.getElementById(id).onclick = function(){
     window.location.href = "http:"+path.detailUrl;
   }
-
+// os elementos dos itens são criados e posicionados no container correspondente
+//
   var img = document.createElement("img");
   img.src = "http:" + path.imageName;
   document.getElementById(id).appendChild(img);
